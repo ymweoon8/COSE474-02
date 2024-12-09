@@ -81,3 +81,20 @@ def extract_issue_keywords(reviews, patterns):
                 issue_keywords[issue] += 1
     sorted_issues = sorted(issue_keywords.items(), key=lambda x: x[1], reverse=True)
     return sorted_issues
+
+issue_patterns = {
+    '로그인 문제': r'로그인|계정|자동로그인|비밀번호|아이디',
+    '주문 실패': r'주문|오더|장바구니',
+    '쿠폰 문제': r'쿠폰|프로모션|할인',
+    '결제 오류': r'결제|환불|결제오류',
+    '앱 충돌': r'꺼짐|멈춤|충돌|팅김|중지',
+    '위치 서비스': r'GPS|위치|지도|반경',
+    '알림 문제': r'푸시|알림',
+    '속도 문제': r'느림|느려|속도|로딩|딜레이|렉|멈춤',
+    '인터페이스': r'UI|화면|디자인|사용법|이용 방법',
+    '회원가입 문제': r'회원가입|가입',
+    '배달 문제': r'배달|딜리버리|시간|식음',
+    '앱 설치 문제': r'설치|업데이트',
+    '데이터 문제': r'데이터|정보|저장|초기화',
+    '품질 문제': r'품질|음식|재료|상태',
+}
