@@ -124,3 +124,63 @@ for app_name, keywords in results.items():
     for issue, percentage in keywords['negative_keywords']:
         print(f"    {issue}: {percentage:.2f}%")
     print("\n")
+
+
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
+font_location = '/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf' # For Windows
+font_name = fm.FontProperties(fname=font_location).get_name()
+plt.rc('font', family=font_name)
+
+issue_translation = {
+    '쿠폰 문제': 'Coupon Issues',
+    '인터페이스 문제': 'Interface Issues',
+    '로그인 문제': 'Login Issues',
+    '주문 실패': 'Order Failures',
+    '결제 오류': 'Payment Errors',
+    '앱 충돌': 'App Crashes',
+    '위치 서비스': 'Location Services',
+    '알림 문제': 'Notification Issues',
+    '속도 문제': 'Performance Issues',
+    '회원가입 문제': 'Registration Issues',
+    '배달 문제': 'Delivery Issues',
+    '앱 설치 문제': 'Installation Issues',
+    '데이터 문제': 'Data Issues',
+    '품질 문제': 'Quality Issues'
+}
+
+def plot_negative_keywords(results):
+    for app_name, data in results.items():
+        # Extract top 5 issue keywords
+        negative_keywords = data['negative_keywords'][:5]
+        issues = [issue_translation.get(issue, issue) for issue, _ in negative_keywords]
+        percentages = [percentage for _, percentage in negative_keywords]
+
+        # Create bar chart
+        plt.figure(figsize=(4, 2))
+        plt.barh(issues, percentages, color='skyblue')
+        plt.xlabel('Percentage of Negative Reviews (%)')
+        plt.ylabel('Issue Keywords')
+        plt.title(f'Top 5 Negative Issue Keywords for {app_name}')
+        plt.gca().invert_yaxis()  # Reverse keyword order
+        plt.tight_layout()
+        plt.show()
+
+def plot_negative_review_percentages(results):
+    apps = list(results.keys())
+    percentages = [data['negative_percentage'] for data in results.values()]
+
+    # Create bar chart
+    plt.figure(figsize=(5, 3))
+    plt.bar(apps, percentages, color='salmon')
+    plt.xlabel('App Names')
+    plt.ylabel('Percentage of 1 and 2-Star Reviews (%)')
+    plt.title('Percentage of 1 and 2-Star Reviews by App')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+plot_negative_keywords(results)
+plot_negative_review_percentages(results)
